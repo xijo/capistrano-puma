@@ -30,7 +30,22 @@ Use it in your deploy.rb as:
 require 'capistrano-puma'
 ```
 
-It'll automatically perform the start/stop/restart tasks after the corresponding deploy task was called.
+Please ensure, that you've set the `application` property to identify the application to manage, e.g.:
+
+```ruby
+set :application, 'foobar'
+
+cap puma:start   # => /etc/init.d/puma start foobar
+```
+
+On inclusion the following capistrano callbacks are inserted:
+
+```ruby
+after "deploy:start",          "puma:start"
+after "deploy:stop",           "puma:stop"
+after "deploy:restart",        "puma:restart"
+after "deploy:create_symlink", "puma:after_symlink"
+```
 
 Or you just call it by hand like:
 
