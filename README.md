@@ -10,7 +10,9 @@ This is an extension of the puma tasks from [Deploying a Rails app on Nginx/Puma
 
 Add this line to your application's Gemfile:
 
-    gem 'capistrano-puma', require: false
+```ruby
+gem 'capistrano-puma', require: false
+```
 
 And then execute:
 
