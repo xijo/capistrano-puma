@@ -6,6 +6,8 @@ These tasks assume that you are using the [jungle tool scripts](https://github.c
 
 This is an extension of the puma tasks from [Deploying a Rails app on Nginx/Puma with Capistrano](http://tommy.chheng.com/2013/01/23/deploying-a-rails-app-on-nginxpuma-with-capistrano) of [Tommy Chheng](https://github.com/tc).
 
+[![Gem Version](https://badge.fury.io/rb/capistrano-puma.png)](http://badge.fury.io/rb/capistrano-puma)
+
 ## Installation
 
 Add this line to your application's Gemfile:
