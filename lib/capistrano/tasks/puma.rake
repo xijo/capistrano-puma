@@ -1,18 +1,8 @@
 # coding: utf-8
 namespace :puma do
 
-  task :set_puma_env do
-    set :sockets_path, fetch(:sockets_path, File.join(shared_path, 'tmp/sockets'))
-    set :puma_roles, fetch(:puma_roles, :app)
-    set :puma_socket, fetch(:puma_socket, "unix://#{sockets_path}/puma.sock")
-    set :pumactl_socket, fetch(:pumactl_socket, "unix://#{sockets_path}/pumactl.sock")
-    set :puma_state, fetch(:puma_state, File.join(sockets_path, 'puma.state'))
-    set :puma_log, fetch(:puma_log, File.join(shared_path, "log/puma-#{stage}.log"))
-    set :puma_flags, fetch(:puma_flags, nil)
-  end
-
   desc "Start puma instance for this application"
-  task :start => [:set_puma_env] do
+  task :start do
     on roles fetch(:puma_roles) do
       within release_path do
         with rails_env: fetch(:rails_env) do
@@ -28,7 +18,7 @@ namespace :puma do
   end
 
   desc "Stop puma instance for this application"
-  task :stop => [:set_puma_env] do
+  task :stop do
     on roles fetch(:puma_roles) do
       within release_path do
         execute :bundle, "exec pumactl -S #{puma_state} stop"
@@ -37,7 +27,7 @@ namespace :puma do
   end
 
   desc "Restart puma instance for this application"
-  task :restart => [:set_puma_env] do
+  task :restart do
     on roles fetch(:puma_roles) do
       within release_path do
         execute :bundle, "exec pumactl -S #{puma_state} restart"
@@ -46,7 +36,7 @@ namespace :puma do
   end
 
   desc "Show status of puma for this application"
-  task :status => [:set_puma_env] do
+  task :status do
     on roles fetch(:puma_roles) do
       within release_path do
         execute :bundle, "exec pumactl -S #{puma_state} stats"
@@ -55,7 +45,7 @@ namespace :puma do
   end
 
   desc "Show status of puma for all applications"
-  task :overview => [:set_puma_env] do
+  task :overview do
     on roles fetch(:puma_roles) do
       within release_path do
         execute :bundle, "exec puma status"
@@ -63,4 +53,16 @@ namespace :puma do
     end
   end
 
+end
+
+namespace :load do
+  task :defaults do
+    set :sockets_path, -> { shared_path.join('tmp/sockets/') }
+    set :puma_roles, -> { :app }
+    set :puma_socket, -> { "unix://#{sockets_path.join('puma.sock')}" }
+    set :pumactl_socket, -> { "unix://#{sockets_path.join('pumactl.sock')}" }
+    set :puma_state, -> { sockets_path.join('puma.state') }
+    set :puma_log, -> { shared_path.join("log/puma-#{stage}.log") }
+    set :puma_flags, -> { nil }
+  end
 end
