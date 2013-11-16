@@ -1,4 +1,4 @@
-# coding: utf-8
+# encoding: utf-8
 namespace :puma do
 
   desc "Start puma instance for this application"
