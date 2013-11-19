@@ -11,6 +11,7 @@ Gem::Specification.new do |gem|
   gem.description   = %q{Provide deployment tasks for puma}
   gem.summary       = %q{Provide deployment tasks for puma}
   gem.homepage      = "http://github.com/xijo/capistrano-puma"
+  gem.license       = "WTFPL"
 
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
