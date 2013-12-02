@@ -59,10 +59,10 @@ namespace :load do
   task :defaults do
     set :sockets_path, -> { shared_path.join('tmp/sockets/') }
     set :puma_roles, -> { :app }
-    set :puma_socket, -> { "unix://#{sockets_path.join('puma.sock')}" }
-    set :pumactl_socket, -> { "unix://#{sockets_path.join('pumactl.sock')}" }
-    set :puma_state, -> { sockets_path.join('puma.state') }
-    set :puma_log, -> { shared_path.join("log/puma-#{stage}.log") }
+    set :puma_socket, -> { "unix://#{fetch(:sockets_path).join('puma.sock')}" }
+    set :pumactl_socket, -> { "unix://#{fetch(:sockets_path).join('pumactl.sock')}" }
+    set :puma_state, -> { fetch(:sockets_path).join('puma.state') }
+    set :puma_log, -> { shared_path.join("log/puma-#{fetch(:stage)}.log") }
     set :puma_flags, -> { nil }
   end
 end
