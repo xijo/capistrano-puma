@@ -7,7 +7,7 @@ namespace :puma do
       within release_path do
         with rails_env: fetch(:rails_env) do
           execute :bundle, "exec puma -b '#{fetch(:puma_socket)}'",
-            " -e #{stage} ",
+            " -e #{fetch(:stage)} ",
             "--control '#{fetch(:pumactl_socket)}'",
             "-S #{fetch(:puma_state)}",
             fetch(:puma_flags),
