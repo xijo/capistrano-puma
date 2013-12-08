@@ -6,12 +6,12 @@ namespace :puma do
     on roles fetch(:puma_roles) do
       within release_path do
         with rails_env: fetch(:rails_env) do
-          execute :bundle, "exec puma -b '#{puma_socket}'",
-            " -e #{stage} ",
-            "--control '#{pumactl_socket}'",
-            "-S #{puma_state}",
+          execute :bundle, "exec puma -b '#{fetch(:puma_socket)}'",
+            " -e #{fetch(:stage)} ",
+            "--control '#{fetch(:pumactl_socket)}'",
+            "-S #{fetch(:puma_state)}",
             fetch(:puma_flags),
-            ">> #{puma_log} 2>&1 &"
+            ">> #{fetch(:puma_log)} 2>&1 &"
         end
       end
     end
@@ -21,7 +21,7 @@ namespace :puma do
   task :stop do
     on roles fetch(:puma_roles) do
       within release_path do
-        execute :bundle, "exec pumactl -S #{puma_state} stop"
+        execute :bundle, "exec pumactl -S #{fetch(:puma_state)} stop"
       end
     end
   end
@@ -30,7 +30,7 @@ namespace :puma do
   task :restart do
     on roles fetch(:puma_roles) do
       within release_path do
-        execute :bundle, "exec pumactl -S #{puma_state} restart"
+        execute :bundle, "exec pumactl -S #{fetch(:puma_state)} restart"
       end
     end
   end
@@ -39,7 +39,7 @@ namespace :puma do
   task :status do
     on roles fetch(:puma_roles) do
       within release_path do
-        execute :bundle, "exec pumactl -S #{puma_state} stats"
+        execute :bundle, "exec pumactl -S #{fetch(:puma_state)} stats"
       end
     end
   end
