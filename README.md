@@ -29,7 +29,7 @@ Or install it yourself as:
 Use it in your deploy.rb as:
 
 ```ruby
-require 'capistrano-puma'
+require 'capistrano/puma'
 ```
 
 Please ensure, that you've set the `application` property to identify the application to manage, e.g.:
